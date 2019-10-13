@@ -1,0 +1,48 @@
+<html>
+<head>
+<title>yourFirstName INF1339 Project 2</title>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/p5.js/0.9.0/p5.js"></script>
+<script>
+    var url = "https://api.nytimes.com/svc/search/v2/articlesearch.json?begin_date=20190203&end_date=20190928&q=pokemon&api-key=sWxKsFSN22SL6mRB6zxZIuIYXz4JrzQt";
+    var articleCount = 0
+    function setup() { 
+        noCanvas();
+        loadJSON(url, gotData);}
+    function gotData(data) {
+        appendToPage (data)}
+    function appendToPage(data) {
+                //MOVE the docs array part of JSON object to "articles" to save typing
+                var articles = data.response.docs;
+                //LOOP over the array, creating a heading and a paragraph for each article
+                for (var i = 0; i < articles.length; i++) {
+                    //increment the counter (so we can number the headlines)
+                    articleCount++
+                    //create a heading element, put text in it, append it to <BODY>
+                    h = document.createElement('h3')
+                    h.innerHTML = '(' + articleCount + ') ' + articles[i].headline.main
+                    document.body.appendChild(h);
+                    //create a paragraph element, put text in it, append it to <BODY>
+                    p = document.createElement('p')
+                    p.innerHTML = articles[i].snippet
+                    document.body.appendChild(p);  
+                  }
+</script>
+<script>
+    function hello() {
+        document.getElementById("sentinel").innerHTML = "HELLO"}
+</script>
+</head>
+  
+<body>
+<style>
+    p.test_class {font-family: sans-serif;
+                  font-size: 40px;
+                  text-align: center;}
+</style>
+    
+<h1>New York Times API: Articles from 20190203 to 20190928 about Pokemon</h1>
+<h3>API Project Iteration 03</h3>
+<p id="sentinel" class="test_class"></p>
+<button type="button" onclick="hello()">hello</button>
+</body>
+</html>
